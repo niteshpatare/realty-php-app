@@ -1,14 +1,7 @@
+<<<<<<< HEAD
 version 0.0.1
 
 
-## Deploying
-
-Install the [Heroku Toolbelt](https://toolbelt.heroku.com/).
-
-```sh
-$ git clone git@github.com:heroku/php-getting-started.git # or clone your own fork
-$ cd php-getting-started
-$ heroku create
-$ git push heroku master
-$ heroku open
-```
+# realty-php-app
+An app for a realty website.
+>>>>>>> 24d170696042d894d827ec47ed76ce6735429672
