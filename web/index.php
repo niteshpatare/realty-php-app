@@ -28,12 +28,6 @@ $app['twig'] = $app->share($app->extend('twig', function($twig, $app) {
     return $twig;
 }));
 
-$app->before(function ($request) use ($app) {
-    $app['twig']->addGlobal('active', $request->get("_route"));
-});
-
-
-
 $app->register(new Silex\Provider\SecurityServiceProvider());
 
 
@@ -64,7 +58,6 @@ $app['security.firewalls'] = array(
         'http' => true,
         'form' => array(
             'login_path' => '/contact', 
-            //'check_path' => '/login_check',
         ),
         
     ),
@@ -93,7 +86,7 @@ $app->match('/contact', function(Request $request) use ($app) {
         'name' => '',
         'email' => '',
         'message' => '',
-        'capcha' => '',
+        'verify' => '',
     );
     $form = $app['form.factory']->createBuilder('form',$default)
         ->add('name', 'text', array(
@@ -108,7 +101,7 @@ $app->match('/contact', function(Request $request) use ($app) {
 			'constraints' => array(new Assert\NotBlank(), new Assert\Length(array('min' => 20))),
 			'attr' => array('class' => 'form-control', 'placeholder' => 'Enter Your Message', 'error' => 'Please enter your query here.')
 		))
-        ->add('capcha', 'text', array(
+        ->add('verify', 'text', array(
             'constraints' => array(new Assert\NotBlank(), new Assert\Length(array('min' => 1))),
 			'attr' => array('class' => 'form-control', 'placeholder' => '2 + 7 = ?', 'errorCapcha' => 'Please calculate the addition of capcha and validate you are a human.')            
 		))
@@ -131,14 +124,18 @@ $app->match('/contact', function(Request $request) use ($app) {
                         ->setFrom(array($data['email'] => $data['name']))
                         ->setTo(array('nitesh.patare27@gmail.com'))
                         ->setBody($data['message']);
-                        $app['mailer']->send($message);
-                    echo $message;
-                    $message = $request->get('message');
+                        $app['mailer']->send($message);                
+                        $sent = true;  
                     
-                    echo $message;
-                    mail('nitesh.patare@gmail.com', '[YourSite] Feedback', $message);
-                
-                        $sent = true;       
+echo $message;
+$message = $request->get('message');
+$app['monolog']->addDebug('logging masg1.----'+$message);
+
+echo $message;
+$app['monolog']->addDebug('logging masg2.----'+$message); 
+
+mail('nitesh.patare27@gmail.com', '[YourSite] Feedback', $message);
+
                 }
                 else{
                     //do something
@@ -148,19 +145,7 @@ $app->match('/contact', function(Request $request) use ($app) {
             }
         }
 
-        //return $app['twig']->render('pages/contact.twig', array('form' => $form->createView(), 'sent' => $sent));
+        return $app['twig']->render('pages/contact.twig', array('form' => $form->createView(), 'sent' => $sent));
     })->bind('contact');
-        
-        
-
-
-
-
-
-
-
-$app->get('/hello/{name}', function($name) use($app) { 
-    return 'Hello '.$app->escape($name); 
-}); 
 
 $app->run();
