@@ -103,7 +103,7 @@ $app->match('/contact', function(Request $request) use ($app) {
 		))
         ->add('verify', 'text', array(
             'constraints' => array(new Assert\NotBlank(), new Assert\Length(array('min' => 1))),
-			'attr' => array('class' => 'form-control', 'placeholder' => '2 + 7 = ?', 'errorCapcha' => 'Please calculate the addition of capcha and validate you are a human.')            
+			'attr' => array('class' => 'form-control', 'placeholder' => '2 + 7 = ?', 'error' => 'Please calculate the addition of capcha and validate you are a human.')            
 		))
 		->add('Enquire Now', 'submit', array(
 			'attr' => array('class' => 'btn btn-default btn-primary')
@@ -117,7 +117,7 @@ $app->match('/contact', function(Request $request) use ($app) {
             $exit = false;
 
             if(!$exit){
-                if($data["capcha"] == 9){
+                if($data["verify"] == 9){
 
                         $message = \Swift_Message::newInstance()
                         ->setSubject('Sai Prasar Nivara Feedback11')
@@ -129,13 +129,10 @@ $app->match('/contact', function(Request $request) use ($app) {
                     
 
 
-$app['monolog']->addDebug('logging masg1.----'+$data['message']);
-
-
-
+//$app['monolog']->addDebug('logging masg1.----'+$data['message']);
+//$app['monolog']->addInfo(sprintf("User '%s' registered.", $username));
 mail('nitesh.patare27@gmail.com', '[YourSite] Feedback', $message);
 
-$app['monolog']->addDebug('logging masg2.----'); 
                 }
                 else{
                     //do something
