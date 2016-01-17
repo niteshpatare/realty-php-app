@@ -75,3 +75,13 @@ button[type=submit]{
 .contact-form .alert-info {
     color:red;
 }
+.navbar-header .navbar-toggle .icon-bar{
+   background-color: #897758; 
+}
+.navbar-inverse .navbar-toggle:focus, .navbar-inverse .navbar-toggle:hover{
+    background-color: #F0E4CD;
+}
+
+.navbar-inverse .navbar-toggle{
+    border-color: #897758;  
+}

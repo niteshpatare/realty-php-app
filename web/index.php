@@ -98,19 +98,19 @@ $app->match('/contact', function(Request $request) use ($app) {
     $form = $app['form.factory']->createBuilder('form',$default)
         ->add('name', 'text', array(
             'constraints' => array(new Assert\NotBlank(), new Assert\Length(array('min' => 3))),
-			'attr' => array('class' => 'form-control', 'placeholder' => 'Your Name')
+			'attr' => array('class' => 'form-control', 'placeholder' => 'Your Name', 'error' => 'Name should be greater than 3 characters')
 		))
 		->add('email', 'email', array(
 			'constraints' => new Assert\Email(),
-			'attr' => array('class' => 'form-control', 'placeholder' => 'Your@email.com')
+			'attr' => array('class' => 'form-control', 'placeholder' => 'Your@email.com', 'error' => 'Please verify your email. Eg.Your@email.com ')
 		))
 		->add('message', 'textarea', array(
 			'constraints' => array(new Assert\NotBlank(), new Assert\Length(array('min' => 20))),
-			'attr' => array('class' => 'form-control', 'placeholder' => 'Enter Your Message')
+			'attr' => array('class' => 'form-control', 'placeholder' => 'Enter Your Message', 'error' => 'Please enter your query here.')
 		))
         ->add('capcha', 'text', array(
             'constraints' => array(new Assert\NotBlank(), new Assert\Length(array('min' => 1))),
-			'attr' => array('class' => 'form-control', 'placeholder' => '2 + 7 is?')
+			'attr' => array('class' => 'form-control', 'placeholder' => '2 + 7 = ?', 'errorCapcha' => 'Please calculate the addition of capcha and validate you are a human.')            
 		))
 		->add('Enquire Now', 'submit', array(
 			'attr' => array('class' => 'btn btn-default btn-primary')
@@ -142,7 +142,7 @@ $app->match('/contact', function(Request $request) use ($app) {
             }
         }
 
-        return $app['twig']->render('pages/contact.twig', array('form' => $form->createView(), 'sent' => $sent, 'errorCapcha' => 'Please calculate the addition of capcha and validate you are a human.'));
+        return $app['twig']->render('pages/contact.twig', array('form' => $form->createView(), 'sent' => $sent));
     })->bind('contact');
         
         
