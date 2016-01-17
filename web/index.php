@@ -127,15 +127,15 @@ $app->match('/contact', function(Request $request) use ($app) {
                         $app['mailer']->send($message);                
                         $sent = true;  
                     
-echo $message;
-$message = $request->get('message');
-$app['monolog']->addDebug('logging masg1.----'+$message);
 
-echo $message;
-$app['monolog']->addDebug('logging masg2.----'+$message); 
+
+$app['monolog']->addDebug('logging masg1.----'+$data['message']);
+
+
 
 mail('nitesh.patare27@gmail.com', '[YourSite] Feedback', $message);
 
+$app['monolog']->addDebug('logging masg2.----'); 
                 }
                 else{
                     //do something
