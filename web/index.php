@@ -40,7 +40,7 @@ $app->register(new Silex\Provider\TranslationServiceProvider(), array(
     'translator.domains' => array(),
 ));
 $app->register(new FormServiceProvider());
-
+$app->register(new Silex\Provider\SwiftmailerServiceProvider());
 
 $app['swiftmailer.options'] = array(
 	'host' => 'smtp.gmail.com',
@@ -126,12 +126,20 @@ $app->match('/contact', function(Request $request) use ($app) {
                         ->setBody($data['message']);
                         $app['mailer']->send($message);                
                         $sent = true;  
-                    
 
+                    
+                    /* another way to sendd email pure php */                  
+// Always set content-type when sending HTML email
+$headers = "MIME-Version: 1.0" . "\r\n";
+$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+
+// More headers
+//$headers .= 'From: <webmaster@example.com>' . "\r\n";
+//$headers .= 'Cc: myboss@example.com' . "\r\n";
 
 //$app['monolog']->addDebug('logging masg1.----'+$data['message']);
 //$app['monolog']->addInfo(sprintf("User '%s' registered.", $username));
-mail('nitesh.patare27@gmail.com', '[YourSite] Feedback', $message);
+mail('nitesh.patare27@gmail.com', '[YourSite] Feedback', $message, $headers);
 
                 }
                 else{
