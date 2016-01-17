@@ -93,6 +93,7 @@ $app->match('/contact', function(Request $request) use ($app) {
         'name' => '',
         'email' => '',
         'message' => '',
+        'capcha' => '',
     );
     $form = $app['form.factory']->createBuilder('form',$default)
         ->add('name', 'text', array(
@@ -107,29 +108,41 @@ $app->match('/contact', function(Request $request) use ($app) {
 			'constraints' => array(new Assert\NotBlank(), new Assert\Length(array('min' => 20))),
 			'attr' => array('class' => 'form-control', 'placeholder' => 'Enter Your Message')
 		))
-		->add('send', 'submit', array(
-			'attr' => array('class' => 'btn btn-default')
+        ->add('capcha', 'text', array(
+            'constraints' => array(new Assert\NotBlank(), new Assert\Length(array('min' => 1))),
+			'attr' => array('class' => 'form-control', 'placeholder' => '2 + 7 is?')
+		))
+		->add('Enquire Now', 'submit', array(
+			'attr' => array('class' => 'btn btn-default btn-primary')
 		))
 		->getForm();
  
 	   $form->handleRequest($request);
     
         if($form->isValid()) {
-            $data = $form->getData();
+            $data = $form->getData();    
+            $exit = false;
 
-            $message = \Swift_Message::newInstance()
-            ->setSubject('Sai Prasar Nivara Feedback11')
-            ->setFrom(array($data['email'] => $data['name']))
-            //->setTo(array('feedback@lilyandlarryllamafarmers.com'))
-            ->setTo(array('nitesh.patare27@gmail.com'))
-            ->setBody($data['message']);
+            if(!$exit){
+                if($data["capcha"] == 9){
 
-            $app['mailer']->send($message);
-
-            $sent = true;
+                        $message = \Swift_Message::newInstance()
+                        ->setSubject('Sai Prasar Nivara Feedback11')
+                        ->setFrom(array($data['email'] => $data['name']))
+                        ->setTo(array('nitesh.patare27@gmail.com'))
+                        ->setBody($data['message']);
+                        $app['mailer']->send($message);
+                        $sent = true;       
+                }
+                else{
+                    //do something
+                    $exit = true;
+                    $sent = false;
+                }
+            }
         }
 
-        return $app['twig']->render('pages/contact.twig', array('form' => $form->createView(), 'sent' => $sent));
+        return $app['twig']->render('pages/contact.twig', array('form' => $form->createView(), 'sent' => $sent, 'errorCapcha' => 'Please calculate the addition of capcha and validate you are a human.'));
     })->bind('contact');
         
         

@@ -1,18 +1,15 @@
+body{
+    font-family: 'Open Sans', sans-serif;
+}
 .jumbotron {
   background: rgba(181, 161, 126, 0.92);
-  color: white;
+     color: #573E13;
   padding-bottom: 80px;
 }
-.jumbotron .btn-primary {
-  background: #845ac7;
-  border-color: #845ac7;
-}
-.jumbotron .btn-primary:hover {
-  background: #7646c1;
-}
-.jumbotron p {
-  color: #d9ccee;
-  max-width: 75%;
+
+.jumbotron p.text-display {
+
+ 
   margin: 1em auto 2em;
 }
 .jumbotron h1 {
@@ -41,18 +38,24 @@
     background: #7C6846;
     border-color: #716111;
 }
-
+.btn-primary:hover,  .navbar-default .navbar-nav>li>a:hover{
+    background-color: #897758;
+    border-color: #897758;
+    color: #fff;
+}
 .navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
     color: #fff;
     background: #7C6846;
     border-color: #716111;
 }
-
-.jumbotron p {
-  color: #573E13;
-  max-width: 75%;
-  margin: 1em auto 2em;
+.navbar-default .navbar-nav>li>a{
+    color: #7C6846;
 }
+.navbar-inverse .navbar-brand, .navbar-inverse .navbar-brand:hover{
+    color: #897758;
+    font-weight: bold;
+}
+
 .jumbotron .h1, .jumbotron h1 {
     color: #573E13;
 }
@@ -63,6 +66,12 @@
 .alert-info .alert-link {
         color: #573E13;
 }
-body{
-    font-family: 'Open Sans', sans-serif;
+.footer .nav>li>a{
+    padding:5px;
+}
+button[type=submit]{
+    text-transform:capitalize;
+}
+.contact-form .alert-info {
+    color:red;
 }
