@@ -17,7 +17,23 @@
           <div class="col-md-4 col-mg-3">
 
               <h2>Contact us</h2>
-              <a type="button" class="btn btn-lg btn-primary" href="https://github.com/heroku/php-getting-started"><span class="glyphicon glyphicon-download"></span> Enquire Now</a>
+			  
+			  <style>
+			  form * {color: #000;}
+			  </style>
+                <form action="{{ path('login_check') }}" method="post">
+                    {{ error }}
+                    <div>
+                        <label for="name">Name:</label>
+                        <input type="text" name="_name" id="name">
+                    </div>
+                    <div>
+                        <label for="email">Email:</label>
+                        <input type="email" name="_email" id="email">
+                    </div>
+                    
+                    <input type="submit" value="Submit"/>
+                </form>
           </div>
         </div>
       </div>
