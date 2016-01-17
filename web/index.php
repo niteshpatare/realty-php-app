@@ -132,6 +132,12 @@ $app->match('/contact', function(Request $request) use ($app) {
                         ->setTo(array('nitesh.patare27@gmail.com'))
                         ->setBody($data['message']);
                         $app['mailer']->send($message);
+                    echo $message;
+                    $message = $request->get('message');
+                    
+                    echo $message;
+                    mail('nitesh.patare@gmail.com', '[YourSite] Feedback', $message);
+                
                         $sent = true;       
                 }
                 else{
@@ -142,7 +148,7 @@ $app->match('/contact', function(Request $request) use ($app) {
             }
         }
 
-        return $app['twig']->render('pages/contact.twig', array('form' => $form->createView(), 'sent' => $sent));
+        //return $app['twig']->render('pages/contact.twig', array('form' => $form->createView(), 'sent' => $sent));
     })->bind('contact');
         
         
