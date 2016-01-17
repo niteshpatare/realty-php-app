@@ -53,8 +53,7 @@ $app['swiftmailer.options'] = array(
 	'port' => 465,
 	'username' => 'nitesh.patare27@gmail.com',
 	'password' => 'premiumgold7g',
-	'encryption' => 'ssl',
-	'auth_mode' => 'login'
+	'encryption' => 'tls',
 );
 
 // Our web handlers
@@ -65,7 +64,7 @@ $app['security.firewalls'] = array(
         'http' => true,
         'form' => array(
             'login_path' => '/contact', 
-            'check_path' => '/login_check',
+            //'check_path' => '/login_check',
         ),
         
     ),
@@ -76,6 +75,9 @@ $app['security.access_rules'] = array(
     array('^/', 'IS_AUTHENTICATED_ANONYMOUSLY')
 );
 
+$app->before(function(Request $request) use ($app){
+    $app['twig']->addGlobal('active', $request->get("_route"));
+});
 
 $app->get('/', function() use($app) {
   $app['monolog']->addDebug('logging output.');
@@ -85,25 +87,54 @@ $app->get('/', function() use($app) {
   ));
 })->bind('home');
 
-$app->get('/contact', function() use ($app) {
-	return $app['twig']->render('pages/contact.twig');
-})->bind('contact');
+$app->match('/contact', function(Request $request) use ($app) {
+    $sent = false;
+    $default = array(
+        'name' => '',
+        'email' => '',
+        'message' => '',
+    );
+    $form = $app['form.factory']->createBuilder('form',$default)
+        ->add('name', 'text', array(
+            'constraints' => array(new Assert\NotBlank(), new Assert\Length(array('min' => 3))),
+			'attr' => array('class' => 'form-control', 'placeholder' => 'Your Name')
+		))
+		->add('email', 'email', array(
+			'constraints' => new Assert\Email(),
+			'attr' => array('class' => 'form-control', 'placeholder' => 'Your@email.com')
+		))
+		->add('message', 'textarea', array(
+			'constraints' => array(new Assert\NotBlank(), new Assert\Length(array('min' => 20))),
+			'attr' => array('class' => 'form-control', 'placeholder' => 'Enter Your Message')
+		))
+		->add('send', 'submit', array(
+			'attr' => array('class' => 'btn btn-default')
+		))
+		->getForm();
+ 
+	   $form->handleRequest($request);
+    
+        if($form->isValid()) {
+            $data = $form->getData();
+
+            $message = \Swift_Message::newInstance()
+            ->setSubject('Sai Prasar Nivara Feedback11')
+            ->setFrom(array($data['email'] => $data['name']))
+            //->setTo(array('feedback@lilyandlarryllamafarmers.com'))
+            ->setTo(array('nitesh.patare27@gmail.com'))
+            ->setBody($data['message']);
+
+            $app['mailer']->send($message);
+
+            $sent = true;
+        }
+
+        return $app['twig']->render('pages/contact.twig', array('form' => $form->createView(), 'sent' => $sent));
+    })->bind('contact');
+        
+        
 
 
-$app->post('/contact', function() use ($app) {
-	$request = $app['request'];
- 
-	$message = \Swift_Message::newInstance()
-		->setSubject('Sai Prasad Nivara Feedback1')
-		->setFrom(array($request->get('email') => $request->get('name')))
-		->setTo(array('nitesh.patare27@gmail.com'))
-		->setBody($request->get('message'));
- 
-	$app['mailer']->send($message);
- 
-	return $app['twig']->render('pages/contact.twig', array('sent' => true));
- 
-});
 
 
 
