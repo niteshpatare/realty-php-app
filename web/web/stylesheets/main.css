@@ -1,0 +1,68 @@
+.jumbotron {
+  background: rgba(181, 161, 126, 0.92);
+  color: white;
+  padding-bottom: 80px;
+}
+.jumbotron .btn-primary {
+  background: #845ac7;
+  border-color: #845ac7;
+}
+.jumbotron .btn-primary:hover {
+  background: #7646c1;
+}
+.jumbotron p {
+  color: #d9ccee;
+  max-width: 75%;
+  margin: 1em auto 2em;
+}
+.jumbotron h1 {
+  font-size: 40px;
+}
+.navbar + .jumbotron {
+  margin-top: -20px;
+}
+.jumbotron .lang-logo {
+  display: block;
+  overflow: hidden;
+  height: 100px;
+  margin: auto;
+  
+}
+.jumbotron .lang-logo img {
+  max-width: 100%;
+}
+/**override*/
+.navbar-inverse {
+    background-color: #fff;
+    border-color: #7C6846;
+}
+
+.jumbotron .btn-primary {
+    background: #7C6846;
+    border-color: #716111;
+}
+
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
+    color: #fff;
+    background: #7C6846;
+    border-color: #716111;
+}
+
+.jumbotron p {
+  color: #573E13;
+  max-width: 75%;
+  margin: 1em auto 2em;
+}
+.jumbotron .h1, .jumbotron h1 {
+    color: #573E13;
+}
+.alert-info {
+    background-color: #F0E4CD;
+    border-color: #F0d1c1;
+}
+.alert-info .alert-link {
+        color: #573E13;
+}
+body{
+    font-family: 'Open Sans', sans-serif;
+}

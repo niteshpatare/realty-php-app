@@ -1,0 +1,19 @@
+<nav class="navbar navbar-default navbar-static-top navbar-inverse">
+  <div class="container">
+      <ul class="nav navbar-nav">
+            <li{% if active == 'home' %} class="active"{% endif %}><a href="{{ path('home') }}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+            <li{% if active == 'contact' %} class="active"{% endif %}><a href="{{ path('contact') }}"><span class="glyphicon glyphicon-home"></span> contact</a></li>
+      </ul>
+      
+    <ul class="nav navbar-nav navbar-right">
+      <li class="navbar-right">
+        <a href="https://www.facebook.com/saiprasadniwara" target="_blank"><img src="images/social/facebook.png" /></a>
+      </li>
+      <li class="navbar-right">
+        <a href="http://www.99acres.com/soham-sai-prasad-niwara-pimpalwadi-road-shirdi-npxid-r7686" target="_blank">
+          <img src="images/social/99acres.png" />
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
