@@ -5,10 +5,13 @@
 </head>
 
 <body>
+    <div class="mainContentWrapper">
   {% include 'nav.twig' %}
 
   {% block content %}{% endblock %}
+        
+        {% include 'footer.twig' %}
+  </div>  
     
-    {% include 'footer.twig' %}
 </body>
 </html>
