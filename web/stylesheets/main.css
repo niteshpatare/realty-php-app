@@ -1,7 +1,7 @@
 body{
     font-family: 'Open Sans', sans-serif;
     color: #573E13;
-    background-color: #eee;
+   /* background-color: #eee;*/
 }
 /*.jumbotron {
   background: rgba(181, 161, 126, 0.92);
@@ -75,6 +75,7 @@ body{
     background-color: rgba(0,0,0,0.5);
     color: #fff;
     padding: 15px 0;
+    border-radius:6px;
 }
 .alert-info {
     background-color: #F0E4CD;
@@ -163,4 +164,12 @@ body{
 }
 .boxWrapper .glyphicon{
     margin-right: 5px;
+}
+
+.contentBlock{
+    background: #eee;
+    padding-top:35px;
+}
+.productSpecs ul {
+    padding-left:20px;
 }
