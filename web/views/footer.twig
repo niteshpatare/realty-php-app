@@ -1,5 +1,6 @@
 <footer class="footer-main">
     <div class="container">
+        <a href="#" class="scrollup"><i class="glyphicon glyphicon-chevron-up"></i></a>
         <ul class="nav navbar-nav navbar-right">
               <li class="navbar-right">
                 <a href="https://www.facebook.com/saiprasadniwara" target="_blank"><img src="images/social/facebook.png" /></a>
@@ -12,3 +13,56 @@
             </ul>
         </div>
 </footer>
+
+<script> 
+
+   
+jQuery(function(){
+"use strict";
+    
+var jQ = jQuery.noConflict(); 	
+    /*animation*/
+      var wow = new WOW(
+      {
+        boxClass:     'wow',      // default
+        animateClass: 'animated', // change this if you are not using animate.css
+        offset:       0,          // default
+        mobile:       true,       // keep it on mobile
+        live:         true        // track if element updates
+      }
+    )
+   wow.init();
+    
+    /*topbar*/
+	var menu = jQ('.navbar'),
+		pos = menu.offset();
+		
+		jQ(window).scroll(function(){
+			if(jQ(this).scrollTop() > pos.top+menu.height() && menu.hasClass('default')){
+				menu.fadeOut('fast', function(){
+					jQ(this).removeClass('default').addClass('fixed').fadeIn('fast');
+				});
+			} else if(jQ(this).scrollTop() <= pos.top && menu.hasClass('fixed')){
+				menu.fadeOut('fast', function(){
+					jQ(this).removeClass('fixed').addClass('default').fadeIn('fast');
+				});
+			}
+		});
+    
+    /*scroll to top*/
+	jQ(window).scroll(function(){
+		if (jQ(this).scrollTop() > 100) {
+			 jQ('.scrollup').fadeIn();
+			} else {
+			 jQ('.scrollup').fadeOut();
+		}
+	});
+	jQ('.scrollup').click(function(){
+		jQ("html, body").animate({ scrollTop: 0 }, 600);
+			return false;
+	});
+
+});
+    
+    
+</script>
