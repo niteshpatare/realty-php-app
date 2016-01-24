@@ -47,7 +47,7 @@ $app['swiftmailer.options'] = array(
 	'port' => 465,
 	'username' => 'nitesh.patare27@gmail.com',
 	'password' => 'premiumgold7g',
-	'encryption' => 'tls',
+	'encryption' => 'ssl',
 );
 
 // Our web handlers
@@ -121,9 +121,9 @@ $app->match('/contact', function(Request $request) use ($app) {
 
                         $message = \Swift_Message::newInstance()
                         ->setSubject('Sai Prasar Nivara Feedback11')
-                        ->setFrom(array($data['email'] => $data['name']))
+                        ->setFrom(array($data['email'] => strip_tags($data['name'])))
                         ->setTo(array('nitesh.patare27@gmail.com'))
-                        ->setBody($data['message']);
+                        ->setBody(strip_tags($data['message']));
                         $app['mailer']->send($message);                
                         $sent = true;  
                 }
