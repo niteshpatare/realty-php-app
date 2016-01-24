@@ -47,7 +47,7 @@ $app['swiftmailer.options'] = array(
 	'port' => 465,
 	'username' => 'nitesh.patare27@gmail.com',
 	'password' => 'premiumgold7g',
-	'encryption' => 'tls',
+	'encryption' => 'ssl',
 );
 
 // Our web handlers
