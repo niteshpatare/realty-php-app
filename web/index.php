@@ -106,7 +106,7 @@ $app->match('/contact', function(Request $request) use ($app) {
 			'attr' => array('class' => 'form-control', 'placeholder' => '2 + 7 = ?', 'error' => 'Please calculate the addition of capcha and validate you are a human.')            
 		))
 		->add('Enquire Now', 'submit', array(
-			'attr' => array('class' => 'btn btn-default btn-primary')
+			'attr' => array('class' => 'btn btn-default btn-primary wow animated swing')
 		))
 		->getForm();
  
