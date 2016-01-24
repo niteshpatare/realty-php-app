@@ -102,7 +102,7 @@ $app->match('/contact', function(Request $request) use ($app) {
 			'attr' => array('class' => 'form-control', 'placeholder' => 'Enter Your Message', 'error' => 'Please enter your query here.')
 		))
         ->add('verify', 'text', array(
-            'constraints' => array(new Assert\NotBlank(), new Assert\Length(array('min' => 1))),
+            'constraints' => array(new Assert\NotBlank(), new Assert\Length(array('min' => 1)), new Assert\Length(array('max' => 1))),
 			'attr' => array('class' => 'form-control', 'placeholder' => '2 + 7 = ?', 'error' => 'Please calculate the addition of capcha and validate you are a human.')            
 		))
 		->add('Enquire Now', 'submit', array(
@@ -111,31 +111,56 @@ $app->match('/contact', function(Request $request) use ($app) {
 		->getForm();
  
 	   $form->handleRequest($request);
-    
-        if($form->isValid()) {
-            $data = $form->getData();    
-            $exit = false;
 
-            if(!$exit){
-                if($data["verify"] == 9){
+       
+            if($form->isValid()) {
+                $data = $form->getData();    
+                $exit = false;
 
-                        $message = \Swift_Message::newInstance()
-                        ->setSubject('Sai Prasar Nivara Feedback11')
-                        ->setFrom(array($data['email'] => strip_tags($data['name'])))
-                        ->setTo(array('nitesh.patare27@gmail.com'))
-                        ->setBody(strip_tags($data['message']));
-                        $app['mailer']->send($message);                
-                        $sent = true;  
-                }
-                else{
-                    //do something
-                    $exit = true;
-                    $sent = false;
+                $name = strip_tags($data['name']);
+                $subject = 'Sai Prasar Nivara Message from '.$name;
+                $fromTo = array($data['email'] => $name);
+                $emailTo = array('nitesh.patare27@gmail.com');
+                $messagebody = strip_tags($data['message']);
+                $verifyKey = strip_tags($data["verify"]);
+
+                if(!$exit){
+                    if($verifyKey == 9){
+
+                            $message = \Swift_Message::newInstance()
+                            ->setSubject($subject)
+                            ->setFrom($fromTo)
+                            ->setTo($emailTo)
+                            ->setBody($messagebody);
+                            $app['mailer']->send($message);                
+                            $sent = true;  
+                    }
+                    else{
+                        //do something
+                        $exit = true;
+                        $sent = false;
+                    }
                 }
             }
-        }
 
-        return $app['twig']->render('pages/contact.twig', array('form' => $form->createView(), 'sent' => $sent));
+            return $app['twig']->render('pages/contact.twig', array('form' => $form->createView(), 'sent' => $sent));
+        
     })->bind('contact');
 
+    $app->error(function (\Exception $e, $code) use ($app) {
+        if ($app['debug']) {
+            return;
+        }
+        switch ($code) {
+            case 404:
+                $message = 'The requested page could not be found.';
+                break;
+            default:
+                $message = 'We are sorry, but something went terribly wrong.';
+        }
+        return new Response($message, $code);
+    });
+
 $app->run();
+
+?>

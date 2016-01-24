@@ -193,6 +193,10 @@ body{
   animation-delay: 0.5s;
   animation-iteration-count: 1;
 }
+form .form-group ul{
+	padding-left: 0px;
+	list-style: none;
+}
 
 /*fixed header*/
 .fixed {
