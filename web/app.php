@@ -8,8 +8,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 $app['debug'] = false;
 $app['baseUrl'] = 'http://localhost/sainivaraslim/web';
-$app['emailFrom'] = 'demoemail@gmail.com';
-$app['emailPass'] = 'demopassword';
+$app['emailFrom'] = 'nitesh.patare27@gmail.com';
+$app['emailPass'] = 'premiumgold74g';
 $app['mailSubject'] = 'Sai Prasad Nivara Enquiry By:- ';
 
 // Register the monolog logging service
