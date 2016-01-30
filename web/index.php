@@ -10,7 +10,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 $app = new Silex\Application();
 $app['debug'] = true;
-$app['base_url'] = 'http://localhost/sainivaraslim/web';
+$app['emailFrom'] = 'demomail@gmail.com';
+$app['emailPass'] = 'demopassword';
+$app['mailSubject'] = 'Sai Prasad Nivara Enquiry By:- ';
 
 // Register the monolog logging service
 $app->register(new Silex\Provider\MonologServiceProvider(), array(
@@ -45,19 +47,19 @@ $app->register(new Silex\Provider\SwiftmailerServiceProvider());
 $app['swiftmailer.options'] = array(
 	'host' => 'smtp.gmail.com',
 	'port' => 465,
-	'username' => 'nitesh.patare27@gmail.com',
-	'password' => 'premiumgold7g',
+	'username' => $app['emailFrom'],
+	'password' => $app['emailPass'],
 	'encryption' => 'ssl',
 );
 
 // Our web handlers
 $app['security.firewalls'] = array(
-    'login' => array(
+    'site' => array(
         'anonymous' => true,
         'pattern' => '^.*$',
         'http' => true,
         'form' => array(
-            'login_path' => '/contact', 
+            'contact_path' => '/contact', 
         ),
         
     ),
@@ -73,7 +75,7 @@ $app->before(function(Request $request) use ($app){
 });
 
 $app->get('/', function() use($app) {
-  $app['monolog']->addDebug('logging output.');
+  $app['monolog']->addDebug('logging home page.');
   return $app['twig']->render('pages/index.twig', array(
     //'error' => $app['security.last_error']($request),
       'error' => 'Contact us using the form below and we\'ll get back in touch with you',
@@ -102,8 +104,8 @@ $app->match('/contact', function(Request $request) use ($app) {
 			'attr' => array('class' => 'form-control', 'placeholder' => 'Enter Your Message', 'error' => 'Please enter your query here.')
 		))
         ->add('verify', 'text', array(
-            'constraints' => array(new Assert\NotBlank(), new Assert\Length(array('min' => 1)), new Assert\Length(array('max' => 1))),
-			'attr' => array('class' => 'form-control', 'placeholder' => '2 + 7 = ?', 'error' => 'Please calculate the addition of capcha and validate you are a human.')            
+            'constraints' => array(new Assert\NotBlank(), new Assert\Length(array('min' => 1, 'max' => 1))),            
+			'attr' => array('class' => 'form-control', 'placeholder' => '2 + 7 = ?', 'error' => 'Please calculate the correct addition of capcha and validate you are a human.')            
 		))
 		->add('Enquire Now', 'submit', array(
 			'attr' => array('class' => 'btn btn-default btn-primary wow animated swing')
@@ -118,20 +120,26 @@ $app->match('/contact', function(Request $request) use ($app) {
                 $exit = false;
 
                 $name = strip_tags($data['name']);
-                $subject = 'Sai Prasar Nivara Message from '.$name;
-                $fromTo = array($data['email'] => $name);
-                $emailTo = array('nitesh.patare27@gmail.com');
+                $subject = $app['mailSubject'].$name;
+                $mailfrom =  strip_tags($data['email']);
+                $emailTo = array($app['emailFrom']);
                 $messagebody = strip_tags($data['message']);
                 $verifyKey = strip_tags($data["verify"]);
-
+    
                 if(!$exit){
                     if($verifyKey == 9){
 
                             $message = \Swift_Message::newInstance()
                             ->setSubject($subject)
-                            ->setFrom($fromTo)
+                            ->setFrom($mailfrom)
                             ->setTo($emailTo)
-                            ->setBody($messagebody);
+                            ->setBody($app['twig']->render('email.twig',   // email template
+                                array('name'      => $name,
+                                      'mailfrom'  => $mailfrom,
+                                      'message'   => $messagebody,
+                                )),'text/html');
+                            //->setBody($messagebody);
+                        
                             $app['mailer']->send($message);                
                             $sent = true;  
                     }

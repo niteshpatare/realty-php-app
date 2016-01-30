@@ -197,7 +197,9 @@ form .form-group ul{
 	padding-left: 0px;
 	list-style: none;
 }
-
+.centerBlock{
+    margin:0 auto;
+}
 /*fixed header*/
 .fixed {
     position: fixed;
