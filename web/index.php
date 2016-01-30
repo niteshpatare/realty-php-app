@@ -104,8 +104,8 @@ $app->match('/contact', function(Request $request) use ($app) {
 			'attr' => array('class' => 'form-control', 'placeholder' => 'Enter Your Message', 'error' => 'Please enter your query here.')
 		))
         ->add('verify', 'text', array(
-            'constraints' => array(new Assert\NotBlank(), new Assert\Length(array('min' => 1, 'max' => 1))),            
-			'attr' => array('class' => 'form-control', 'placeholder' => '2 + 7 = ?', 'error' => 'Please calculate the correct addition of capcha and validate you are a human.')            
+            'constraints' => array(new Assert\NotBlank(), new Assert\Length(array('min' => 1, 'max' => 1)), new Assert\EqualTo(array('value' => 9)) ),            
+			'attr' => array('class' => 'form-control', 'placeholder' => '2 + 7 = ?')            
 		))
 		->add('Enquire Now', 'submit', array(
 			'attr' => array('class' => 'btn btn-default btn-primary wow animated swing')

@@ -200,6 +200,16 @@ form .form-group ul{
 .centerBlock{
     margin:0 auto;
 }
+form  ul{
+	padding-left: 0px;
+	list-style: none;
+	color:red
+}
+form  ul li:before{
+  display:inline;
+  content: "Error:-";
+  margin-right:5px
+}
 /*fixed header*/
 .fixed {
     position: fixed;
@@ -226,3 +236,4 @@ a.scrollup {
     background: #7C6846;
     border-color: #716111;
 }
+.container{width:90%;max-width:1200px;}
