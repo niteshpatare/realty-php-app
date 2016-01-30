@@ -1,0 +1,21 @@
+{% extends 'layout.twig' %}
+
+{% if form is defined %}
+	{% form_theme form 'form/fields.twig' %}
+ {% endif %}
+
+{% block content %}
+    <div class=" contact-form">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12  wow animated zoomIn">
+                    <div class="alert alert-info text-center">
+                        <p>{{message}}</p>
+                        <a href="{{ path('home') }}"><span class="glyphicon glyphicon-home"></span> Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

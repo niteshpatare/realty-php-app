@@ -193,14 +193,13 @@ body{
   animation-delay: 0.5s;
   animation-iteration-count: 1;
 }
-form .form-group ul{
-	padding-left: 0px;
-	list-style: none;
+form{
+	margin-bottom: 20px;
 }
 .centerBlock{
     margin:0 auto;
 }
-form  ul{
+form ul{
 	padding-left: 0px;
 	list-style: none;
 	color:red
@@ -210,6 +209,7 @@ form  ul li:before{
   content: "Error:-";
   margin-right:5px
 }
+
 /*fixed header*/
 .fixed {
     position: fixed;

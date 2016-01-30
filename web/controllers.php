@@ -5,10 +5,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-
 use Silex\Provider\FormServiceProvider;
-
-
 use Symfony\Component\Validator\Constraints as Assert;
 
 
@@ -50,6 +47,10 @@ $app->match('/contact', function(Request $request) use ($app) {
 		))
 		->getForm();
  
+    
+    $request = $app['request'];
+    if ($request->isMethod('POST'))
+    {
 	   $form->handleRequest($request);
 
        
@@ -88,18 +89,20 @@ $app->match('/contact', function(Request $request) use ($app) {
                     }
                 }
             }
-
+    }
             return $app['twig']->render('pages/contact.twig', array('form' => $form->createView(), 'sent' => $sent));
         
-    })->bind('contact');
+    }, "GET|POST")->bind('contact');
 
     $app->error(function (\Exception $e, $code) use ($app) {
         if ($app['debug']) {
+            
             return;
         }
         switch ($code) {
             case 404:
                 $message = 'The requested page could not be found.';
+                return $app['twig']->render('pages/404.twig', array('message' => $message));
                 break;
             default:
                 $message = 'We are sorry, but something went terribly wrong.';
