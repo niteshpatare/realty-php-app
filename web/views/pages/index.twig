@@ -41,7 +41,7 @@
         <h3>Proximities</h3>
 2.5 km from Sai Baba Temple and the nearest landmark to this project is Taj Hotel
         </p>
-      <a href="contact" class="btn btn-lg btn-primary  wow animated swing " >Enquire Now</a>
+      <a href="{{ path('contact') }}" class="btn btn-lg btn-primary  wow animated swing " >Enquire Now</a>
     </div>
     <div class="col-sm-3">
        <h3><span class="glyphicon glyphicon-link"></span>Ongoing Projects</h3>
@@ -264,11 +264,69 @@
 
 
 
-<div class="boxWrapper contentBlock wow animated fadeInUp">
-  <div class="container" style="min-height:200px;">
+<div class="boxWrapper contentBlock wow animated fadeInDown">
+  <div class="container">
+      
+    <div class="row">
+        <div class="col-md-12">
+            <h3><span class="glyphicon glyphicon-link"></span>Floor Plans</h3>
+        </div>
+    </div>
+      
       <div class="row">
-        <div class="col-md-12">        
+        <div class="col-md-12">    
             
+            
+            
+            <div id="carousel-images" class="carousel slide" data-ride="carousel">
+                  <!-- Indicators -->
+                  <ol class="carousel-indicators">
+                    <li data-target="#carousel-images" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-images" data-slide-to="1"></li>
+                    <li data-target="#carousel-images" data-slide-to="2"></li>
+                  </ol>
+
+                  <!-- Wrapper for slides -->
+                  <div class="carousel-inner" role="listbox">
+                    <div class="item active">
+                        <a href="{{ asset('images/floorplan1.jpg') }}" data-featherlight="image">
+                            <img class="centerBlock" src="{{ asset('images/floorplan1.jpg') }}" >
+                        </a>
+                      <div class="carousel-caption">
+                            Click on image to view.
+                      </div>
+                    </div>
+                    <div class="item">
+                        <a href="{{ asset('images/floorplan2.jpg') }}" data-featherlight="image">
+                            <img class="centerBlock" src="{{ asset('images/floorplan2.jpg') }}" >
+                        </a>
+                      <div class="carousel-caption">
+                            Click on image to view.
+                      </div>
+                    </div>
+                    <div class="item">
+                        <a href="{{ asset('images/floorplan3.jpg') }}" data-featherlight="image">
+                            <img class="centerBlock" src="{{ asset('images/floorplan3.jpg') }}" >
+                        </a>
+                      <div class="carousel-caption">
+                            Click on image to view.
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Controls -->
+                  <a class="left carousel-control" href="#carousel-images" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="right carousel-control" href="#carousel-images" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                  </a>
+            </div>
+            
+            
+                   
             
           </div>
           
