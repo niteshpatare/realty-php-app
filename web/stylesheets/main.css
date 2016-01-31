@@ -62,6 +62,9 @@ body{
 .navbar-default .navbar-nav>li>a{
     color: #7C6846;
 }
+.navbar-inverse .navbar-nav>li>a:focus{
+    color: #7C6846;
+}
 .navbar-inverse .navbar-brand, .navbar-inverse .navbar-brand:hover{
     color: #897758;
     font-weight: bold;
@@ -160,7 +163,7 @@ body{
 .boxWrapper .iconText{
     margin-left:25px;
 }
-.boxWrapper .glyphicon{
+.boxWrapper .glyphicon, .contact-form .glyphicon {
     margin-right: 5px;
 }
 
@@ -176,13 +179,13 @@ body{
         text-align: center;
     }
 @media screen and (min-width:992px){
-    .locationImg{
+   /* .locationImg{
         transition: all .2s ease-in-out;
     }
     .locationImg:hover{
         transform: scale(2.0);
         margin-left: -150px;
-    }
+    }*/
     .mapBlock{
         padding-top:70px;
         text-align: center;
@@ -212,8 +215,9 @@ form  ul li:before{
 
 .navbar + .contact-form {
     margin-top: -20px;
-    padding-bottom: 30px;
+    padding-bottom: 55px;
     background: #eee;
+        padding-top: 30px;
 }
 .carousel-inner>.item{
     min-height: 400px;
