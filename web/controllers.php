@@ -61,7 +61,7 @@ $app->match('/contact', function(Request $request) use ($app) {
                 $name = strip_tags($data['name']);
                 $subject = $app['mailSubject'].$name;
                 $mailfrom =  strip_tags($data['email']);
-                $emailTo = array($app['emailFrom']);
+                $emailTo = array($app['emailTo']=> 'Mail 1', $app['emailToCC'] => 'Mail 2');
                 $messagebody = strip_tags($data['message']);
                 $verifyKey = strip_tags($data["verify"]);
     

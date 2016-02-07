@@ -8,7 +8,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 $app['debug'] = false;
 $app['baseUrl'] = 'http://localhost/sainivaraslim/web';
-$app['emailFrom'] = 'demoemail@gmail.com';
+$app['emailTo'] = 'demoemail@gmail.com';
+$app['emailToCC'] = 'demoemail2@gmail.com';
 $app['emailPass'] = 'demopassword';
 $app['mailSubject'] = 'Sai Prasad Nivara Enquiry By:- ';
 
@@ -45,7 +46,7 @@ $app->register(new Silex\Provider\SwiftmailerServiceProvider());
 $app['swiftmailer.options'] = array(
 	'host' => 'smtp.gmail.com',
 	'port' => 465,
-	'username' => $app['emailFrom'],
+	'username' => $app['emailTo'],
 	'password' => $app['emailPass'],
 	'encryption' => 'ssl',
 );
