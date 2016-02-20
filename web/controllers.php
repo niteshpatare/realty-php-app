@@ -7,13 +7,13 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Silex\Provider\FormServiceProvider;
 use Symfony\Component\Validator\Constraints as Assert;
-
+//use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrue as RecaptchaTrue;
 
 $app->get('/', function() use($app) {
-  $app['monolog']->addDebug('logging home page.');
+  //$app['monolog']->addDebug('logging home page.');
   return $app['twig']->render('pages/index.twig', array(
     //'error' => $app['security.last_error']($request),
-      'error' => 'Contact us using the form below and we\'ll get back in touch with you',
+      'error' => 'We\'ll get back online soon.',
   ));
 })->bind('home');
 
@@ -25,6 +25,10 @@ $app->match('/contact', function(Request $request) use ($app) {
         'message' => '',
         'verify' => '',
     );
+    $randNo1 = 4;
+    $randNo2 = 5;
+    $query = $randNo1 . " + " . $randNo2 . '= ?';
+    $queryRVal = $randNo1 + $randNo2;
     $form = $app['form.factory']->createBuilder('form',$default)
         ->add('name', 'text', array(
             'constraints' => array(new Assert\NotBlank(), new Assert\Length(array('min' => 3))),
@@ -39,21 +43,19 @@ $app->match('/contact', function(Request $request) use ($app) {
 			'attr' => array('class' => 'form-control', 'placeholder' => 'Enter Your Message', 'error' => 'Please enter your query here.')
 		))
         ->add('verify', 'text', array(
-            'constraints' => array(new Assert\NotBlank(), new Assert\Length(array('min' => 1, 'max' => 1)), new Assert\EqualTo(array('value' => 9)) ),            
-			'attr' => array('class' => 'form-control', 'placeholder' => '2 + 7 = ?')            
+            'constraints' => array(new Assert\NotBlank(), new Assert\Length(array('min' => 1, 'max' => 1)), new Assert\EqualTo(array('value' => $queryRVal)) ),            
+			'attr' => array('class' => 'form-control', 'placeholder' => $query)            
 		))
 		->add('Enquire Now', 'submit', array(
 			'attr' => array('class' => 'btn btn-default btn-primary wow animated swing')
 		))
-		->getForm();
- 
-    
+		->getForm();    
     $request = $app['request'];
     if ($request->isMethod('POST'))
     {
 	   $form->handleRequest($request);
-
-       
+        
+        
             if($form->isValid()) {
                 $data = $form->getData();    
                 $exit = false;
@@ -64,10 +66,10 @@ $app->match('/contact', function(Request $request) use ($app) {
                 $emailTo = array($app['emailTo']=> 'Mail 1', $app['emailToCC'] => 'Mail 2');
                 $messagebody = strip_tags($data['message']);
                 $verifyKey = strip_tags($data["verify"]);
-    
+                    
                 if(!$exit){
-                    if($verifyKey == 9){
-
+                    if($verifyKey == $queryRVal){
+                
                             $message = \Swift_Message::newInstance()
                             ->setSubject($subject)
                             ->setFrom($mailfrom)
@@ -90,6 +92,7 @@ $app->match('/contact', function(Request $request) use ($app) {
                 }
             }
     }
+    
             return $app['twig']->render('pages/contact.twig', array('form' => $form->createView(), 'sent' => $sent));
         
     }, "GET|POST")->bind('contact');

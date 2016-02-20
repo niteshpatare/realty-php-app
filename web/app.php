@@ -7,7 +7,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 $app['debug'] = false;
-$app['baseUrl'] = 'http://localhost/sainivaraslim/web';
 $app['emailTo'] = 'demoemail@gmail.com';
 $app['emailToCC'] = 'demoemail2@gmail.com';
 $app['emailPass'] = 'demopassword';
@@ -43,6 +42,14 @@ $app->register(new Silex\Provider\TranslationServiceProvider(), array(
 $app->register(new FormServiceProvider());
 $app->register(new Silex\Provider\SwiftmailerServiceProvider());
 
+/*
+$app->register(new \EWZ\Bundle\RecaptchaBundle\Bridge\RecaptchaServiceProvider(), array(
+    'ewz_recaptcha.public_key' => 'flipkartamazon',
+    'ewz_recaptcha.private_key' => 'facebookgoogle'
+));
+use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrue as RecaptchaTrue;
+  */  
+    
 $app['swiftmailer.options'] = array(
 	'host' => 'smtp.gmail.com',
 	'port' => 465,
